@@ -80,19 +80,19 @@ Constructor __init__(ScgiDispatcher)
             listener_address = "localhost:2303"
         #
 
-        listener_data = set()
+        listener_data = [ ]
 
         if (listener_mode in ( socket.AF_INET, socket.AF_INET6 )):
             re_result = re.search("^(.+):(\\d+)$", listener_address)
 
             if (re_result is None):
-                listener_data.add(listener_address)
-                listener_data.add(None)
+                listener_data.append(listener_address)
+                listener_data.append(None)
             else:
-                listener_data.add(re_result.group(1))
-                listener_data.add(int(re_result.group(2)))
+                listener_data.append(re_result.group(1))
+                listener_data.append(int(re_result.group(2)))
             #
-        else: listener_data.add(listener_address)
+        else: listener_data.append(listener_address)
 
         listener_socket = Dispatcher.prepare_socket(listener_mode, *listener_data)
         LogLine.info("pas.http.scgi server starts at '{0}'", listener_address, context = "pas_http_scgi")
